@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;800&family=Noto+Serif+SC:wght@700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1250px;
+    height: 500px;
+    overflow: hidden;
+    background: #080c18;
+    font-family: 'Inter', 'Helvetica Neue', sans-serif;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .banner {
+    width: 1250px;
+    height: 500px;
+    padding: 48px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* 顶部小字行 */
+  .top-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    font-weight: 600;
+  }
+
+  .top-line .accent-bar {
+    width: 32px;
+    height: 2px;
+    background: #3fc7c0;
+    display: inline-block;
+    margin-right: 12px;
+    vertical-align: middle;
+  }
+
+  .top-line .vol {
+    display: flex;
+    align-items: center;
+  }
+
+  .top-line .center-text {
+    color: rgba(255,255,255,0.35);
+    font-size: 12px;
+    letter-spacing: 3px;
+  }
+
+  .top-line .daily-label {
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* 中间大标题 */
+  .main-title {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    line-height: 1;
+  }
+
+  .main-title .ai-island {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-weight: 900;
+    font-size: 120px;
+    color: #fff;
+    letter-spacing: -1px;
+  }
+
+  .main-title .dot {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 72px;
+    color: #3fc7c0;
+    margin: 0 2px;
+    align-self: center;
+  }
+
+  .main-title .hot-daily {
+    font-family: 'Noto Serif SC', 'SimSun', 'STSong', serif;
+    font-weight: 900;
+    font-size: 110px;
+    color: #fff;
+    letter-spacing: 8px;
+  }
+
+  /* 底部行 */
+  .bottom-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bottom-line .date-cn {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  .bottom-line .line-bar {
+    flex: 1;
+    height: 1.5px;
+    background: linear-gradient(to right, #3fc7c0, rgba(63,199,192,0.1));
+    margin: 0 24px;
+  }
+
+  .bottom-line .footer-text {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="top-line">
+      <div class="vol">
+        <span class="accent-bar"></span>
+        <span id="vol-text"></span>
+      </div>
+      <span class="center-text">· DAILY NEWS ·</span>
+      <span class="daily-label">AI ISLAND DAILY</span>
+    </div>
+
+    <div class="main-title">
+      <span class="ai-island">AI岛</span>
+      <span class="dot">·</span>
+      <span class="hot-daily">热点日报</span>
+    </div>
+
+    <div class="bottom-line">
+      <span class="date-cn" id="date-text"></span>
+      <span class="line-bar"></span>
+      <span class="footer-text">DAILY · 每日晨间</span>
+    </div>
+  </div>
+
+  <script>
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    document.getElementById('vol-text').textContent = `VOL.${y}.${m}.${day}`;
+
+    const cnNums = ['〇','一','二','三','四','五','六','七','八','九'];
+    const cnYear = String(y).split('').map(c => cnNums[+c]).join('');
+    const months = ['一','二','三','四','五','六','七','八','九','十','十一','十二'];
+    const cnMonth = months[d.getMonth()];
+
+    const dayMap = {
+      1:'一',2:'二',3:'三',4:'四',5:'五',6:'六',7:'七',8:'八',9:'九',10:'十',
+      11:'十一',12:'十二',13:'十三',14:'十四',15:'十五',16:'十六',17:'十七',18:'十八',19:'十九',20:'二十',
+      21:'二十一',22:'二十二',23:'二十三',24:'二十四',25:'二十五',26:'二十六',27:'二十七',28:'二十八',29:'二十九',30:'三十',31:'三十一'
+    };
+    const cnDay = dayMap[d.getDate()];
+    const weekdays = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+    const cnWeek = weekdays[d.getDay()];
+
+    document.getElementById('date-text').textContent = `${cnYear}年${cnMonth}月${cnDay}日 ${cnWeek}`;
+  </script>
+</body>
+</html>
