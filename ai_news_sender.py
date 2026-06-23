@@ -15,7 +15,7 @@ AI热点日报 → 飞书卡片推送（轻量版 v3）
     python3 ai_news_sender.py --push-list         # ① 抓取 + 推送新闻列表到测试群
     python3 ai_news_sender.py --preview            # ② 选内容 + 推送预览卡片到测试群
     python3 ai_news_sender.py --send-production    # ③ 自动发送到正式群（定时任务用）
-    python3 ai_news_sender.py --send-reminder      # ④ 发送提醒卡片到测试群（8:50定时用）
+    python3 ai_news_sender.py --send-reminder      # ④ 发送提醒卡片到测试群（9:20定时用）
     python3 ai_news_sender.py --refresh-banner     # 单独刷新头图日期
 """
 
@@ -611,7 +611,7 @@ def build_list_card(categorized: dict[str, list[dict]], banner_key: str = "") ->
     # 提示：引导用户执行 --preview 选择条目
     elements.append({
         "tag": "markdown",
-        "content": "请在终端运行 `python3 ai_news_sender.py --preview` 选择要发送的条目，正式卡片将以你选的条目为准。",
+        "content": "请在终端运行以下命令选择要发送的条目，正式卡片将以你选的条目为准：\n```\ncd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --preview\n```",
     })
 
     # 结尾：数据来源
@@ -675,7 +675,7 @@ def build_reminder_card() -> str:
                 "elements": [
                     {
                         "tag": "markdown",
-                        "content": "```\npython3 /Users/zt26278/Q/AI/26AI落地/AI热点/ai_news_sender.py --preview\n```",
+                        "content": "```\ncd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --preview\n```",
                     },
                 ],
             }],
@@ -698,7 +698,7 @@ def build_reminder_card() -> str:
                 "elements": [
                     {
                         "tag": "markdown",
-                        "content": "```\npython3 /Users/zt26278/Q/AI/26AI落地/AI热点/ai_news_sender.py --send-production\n```",
+                        "content": "```\ncd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --send-production\n```",
                     },
                 ],
             }],
@@ -842,7 +842,7 @@ def main():
             print()
             print("  ✅ 新闻列表已推送到测试群！")
             print("  👉 在飞书上浏览今天的热点，然后运行下一步：")
-            print("     python3 /Users/zt26278/Q/AI/26AI落地/AI热点/ai_news_sender.py --preview")
+            print("     cd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --preview")
             print()
         else:
             log.error("推送到测试群失败")
@@ -858,7 +858,7 @@ def main():
         # 从缓存加载
         categorized = load_cache()
         if not categorized:
-            log.error("没有找到今日新闻缓存。请先运行：python3 /Users/zt26278/Q/AI/26AI落地/AI热点/ai_news_sender.py --push-list")
+            log.error("没有找到今日新闻缓存。请先运行：cd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --push-list")
             return
 
         log.info("从缓存加载了 %d 条新闻", sum(len(v) for v in categorized.values()))
@@ -903,7 +903,7 @@ def main():
             print()
             print("  ✅ 预览卡片已推送到测试群！去飞书看看效果吧。")
             print("  👉 满意的话，定时任务会在 09:30 自动推送到正式群。")
-            print("     也可以手动运行：python3 /Users/zt26278/Q/AI/26AI落地/AI热点/ai_news_sender.py --send-production")
+            print("     也可以手动运行：cd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --send-production")
             print()
         else:
             log.error("推送到测试群失败")
@@ -966,7 +966,7 @@ def main():
         return
 
     # ═══════════════════════════════════════════════════════
-    # ④ 发送提醒卡片到测试群（定时任务 8:50 触发）
+    # ④ 发送提醒卡片到测试群（定时任务 9:20 触发）
     # ═══════════════════════════════════════════════════════
     if send_reminder:
         print("  ▸ 发送提醒卡片到测试群")
@@ -1005,19 +1005,19 @@ def main():
     print("  使用方法（三步工作流）：")
     print()
     print("  ① 抓取新闻 + 推送列表到测试群：")
-    print("     python3 /Users/zt26278/Q/AI/26AI落地/AI热点/ai_news_sender.py --push-list")
+    print("     cd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --push-list")
     print()
     print("  ② 选择内容 + 推送预览卡片到测试群：")
-    print("     python3 /Users/zt26278/Q/AI/26AI落地/AI热点/ai_news_sender.py --preview")
+    print("     cd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --preview")
     print()
     print("  ③ 自动发送到正式群（定时任务用）：")
-    print("     python3 /Users/zt26278/Q/AI/26AI落地/AI热点/ai_news_sender.py --send-production")
+    print("     cd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --send-production")
     print()
-    print("  ④ 发送提醒卡片到测试群（定时任务 8:50 用）：")
-    print("     python3 /Users/zt26278/Q/AI/26AI落地/AI热点/ai_news_sender.py --send-reminder")
+    print("  ④ 发送提醒卡片到测试群（定时任务 9:20 用）：")
+    print("     cd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --send-reminder")
     print()
     print("  其他：")
-    print("     python3 /Users/zt26278/Q/AI/26AI落地/AI热点/ai_news_sender.py --refresh-banner   # 单独刷新头图")
+    print("     cd ~/Q/AI/26AI落地/AI热点 && ~/bin/python3 ai_news_sender.py --refresh-banner   # 单独刷新头图")
     print()
 
 
